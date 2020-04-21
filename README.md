@@ -1,8 +1,8 @@
 # csv2json
 
 ```
-$ cat data.csv | csv2json
-$ cat data.tsv | csv2json --field-delimiter $'\t'
+$ cat data.csv | csv2json | jq
+$ cat data.tsv | csv2json --field-delimiter $'\t' | jq
 ```
 
 ## Installation
