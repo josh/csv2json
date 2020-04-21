@@ -9,6 +9,27 @@ struct CSV2JSON: ParsableCommand {
     @Option(default: "\n")
     var rowDelimiter: String
 
+    enum Header: String, ExpressibleByArgument {
+        case none
+        case firstLine = "first-line"
+
+        var strategy: CodableCSV.Strategy.Header {
+            switch self {
+            case .none:
+                return .none
+            case .firstLine:
+                return .firstLine
+            }
+        }
+
+        var defaultValueDescription: String {
+            "\(rawValue)"
+        }
+    }
+
+    @Option(default: .firstLine)
+    var header: Header
+
     func run() throws {
         let reader = try CSVReader(input: readStdinData(), configuration: csvConfiguration)
 
@@ -40,7 +61,7 @@ struct CSV2JSON: ParsableCommand {
             field: Delimiter.Field(stringLiteral: fieldDelimiter),
             row: Delimiter.Row(stringLiteral: rowDelimiter)
         )
-        config.headerStrategy = .firstLine
+        config.headerStrategy = header.strategy
         return config
     }
 
