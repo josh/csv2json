@@ -33,6 +33,39 @@ struct CSV2JSON: ParsableCommand {
     func run() throws {
         let reader = try CSVReader(input: readStdinData(), configuration: csvConfiguration)
 
+        switch reader.configuration.headerStrategy {
+        case .none:
+            try readRows(reader)
+        case .firstLine:
+            try readRecords(reader)
+        }
+    }
+
+    func readRows(_ reader: CSVReader) throws {
+        assert(reader.headers.isEmpty, "headers found")
+
+        while let row = try reader.readRow() {
+            var didOpen = false
+
+            for field in row {
+                if didOpen == false {
+                    print("[", terminator: "")
+                    didOpen = true
+                } else {
+                    print(",", terminator: "")
+                }
+                print(escapeJSON(field), terminator: "")
+            }
+
+            if didOpen == true {
+                print("]")
+            }
+        }
+    }
+
+    func readRecords(_ reader: CSVReader) throws {
+        assert(!reader.headers.isEmpty, "no headers found")
+
         while let record = try reader.readRecord() {
             var didOpen = false
 

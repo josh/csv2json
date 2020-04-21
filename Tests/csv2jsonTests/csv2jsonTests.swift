@@ -35,6 +35,21 @@ final class csv2jsonTests: XCTestCase {
         XCTAssertEqual(try csv2json(csv, ["--field-delimiter", "\t"]), json)
     }
 
+    func testNoHeader() throws {
+        let csv = """
+        aaa,bbb,ccc
+        zzz,yyy,xxx
+        """
+
+        let json = """
+        ["aaa","bbb","ccc"]
+        ["zzz","yyy","xxx"]
+
+        """
+
+        XCTAssertEqual(try csv2json(csv, ["--header", "none"]), json)
+    }
+
     func csv2json(_ input: String, _ arguments: [String] = []) throws -> String? {
         let binary = productsDirectory.appendingPathComponent("csv2json")
 
