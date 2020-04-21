@@ -99,7 +99,6 @@ struct CSV2JSON: ParsableCommand {
     }
 
     func readStdinData() -> Data {
-        // TODO: Read stdin as stream
         var data = Data()
         while let line = readLine(strippingNewline: false) {
             data.append(Data(line.utf8))
@@ -108,7 +107,6 @@ struct CSV2JSON: ParsableCommand {
     }
 
     func escapeJSON(_ value: String) -> String {
-        // TODO: Implement JSON string escaping without JSONSerialization
         try! String(
             decoding: JSONSerialization.data(withJSONObject: value, options: .fragmentsAllowed),
             as: UTF8.self
