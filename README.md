@@ -24,6 +24,6 @@ Build from source.
 ```
 $ git clone https://github.com/josh/csv2json
 $ cd csv2json
-$ swift build -c releas
+$ swift build -c release
 $ cp -f .build/release/csv2json /usr/local/bin/csv2json
 ```
