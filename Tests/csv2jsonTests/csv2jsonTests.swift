@@ -3,7 +3,7 @@ import XCTest
 import class Foundation.Bundle
 
 final class csv2jsonTests: XCTestCase {
-    func testExample() throws {
+    func testDefault() throws {
         let csv = """
         a,b,c
         aaa,bbb,ccc
@@ -17,6 +17,22 @@ final class csv2jsonTests: XCTestCase {
         """
 
         XCTAssertEqual(try csv2json(csv), json)
+    }
+
+    func testTabDelimiter() throws {
+        let csv = """
+        a\tb\tc
+        aaa\tbbb\tccc
+        zzz\tyyy\txxx
+        """
+
+        let json = """
+        {"a":"aaa","b":"bbb","c":"ccc"}
+        {"a":"zzz","b":"yyy","c":"xxx"}
+
+        """
+
+        XCTAssertEqual(try csv2json(csv, ["--field-delimiter", "\t"]), json)
     }
 
     func csv2json(_ input: String, _ arguments: [String] = []) throws -> String? {
