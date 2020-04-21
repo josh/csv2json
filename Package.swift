@@ -7,6 +7,9 @@ let package = Package(
     platforms: [
         .macOS(.v10_15),
     ],
+    products: [
+        .executable(name: "csv2json", targets: ["csv2json"]),
+    ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.5"),
         .package(url: "https://github.com/dehesa/CodableCSV", from: "0.5.4"),
