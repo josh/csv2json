@@ -8,7 +8,7 @@ struct CSV2JSON: ParsableCommand {
 
     @Option(default: "\n")
     var rowDelimiter: String
-    
+
     enum Escaping: String, ExpressibleByArgument {
         case none
         case doubleQuote = "\""
@@ -26,7 +26,7 @@ struct CSV2JSON: ParsableCommand {
             "\(rawValue)"
         }
     }
-    
+
     @Option(default: .doubleQuote)
     var escaping: Escaping
 
@@ -129,10 +129,8 @@ struct CSV2JSON: ParsableCommand {
     }
 
     func escapeJSON(_ value: String) -> String {
-        try! String(
-            decoding: JSONSerialization.data(withJSONObject: value, options: .fragmentsAllowed),
-            as: UTF8.self
-        )
+        let escaped = value.unicodeScalars.map { $0.escaped(asASCII: true) }.joined()
+        return "\"\(escaped)\""
     }
 }
 

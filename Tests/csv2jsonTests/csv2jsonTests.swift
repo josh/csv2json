@@ -50,6 +50,20 @@ final class csv2jsonTests: XCTestCase {
         XCTAssertEqual(try csv2json(csv, ["--header", "none"]), json)
     }
 
+    func escapeJSON(_ value: String) -> String {
+        let escaped = value.unicodeScalars.map { $0.escaped(asASCII: true) }.joined()
+        return "\"\(escaped)\""
+    }
+
+    func testEscapeJSON() throws {
+        XCTAssertEqual(escapeJSON("foo"), #""foo""#)
+        XCTAssertEqual(escapeJSON("Hello \"World\"!"), #""Hello \"World\"!""#)
+        XCTAssertEqual(escapeJSON("1\n2\n3\n"), #""1\n2\n3\n""#)
+        XCTAssertEqual(escapeJSON("1\t2\t3\t"), #""1\t2\t3\t""#)
+        XCTAssertEqual(escapeJSON("\\0"), #""\\0""#)
+        XCTAssertEqual(escapeJSON("😀"), #""\u{0001F600}""#)
+    }
+
     func csv2json(_ input: String, _ arguments: [String] = []) throws -> String? {
         let binary = productsDirectory.appendingPathComponent("csv2json")
 
