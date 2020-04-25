@@ -1,6 +1,5 @@
 import ArgumentParser
 import CodableCSV
-import Foundation
 
 struct CSV2JSON: ParsableCommand {
     @Option(default: ",")
@@ -120,12 +119,12 @@ struct CSV2JSON: ParsableCommand {
         return config
     }
 
-    func readStdinData() -> Data {
-        var data = Data()
+    func readStdinData() -> String {
+        var lines = ""
         while let line = readLine(strippingNewline: false) {
-            data.append(Data(line.utf8))
+            lines += line
         }
-        return data
+        return lines
     }
 
     func escapeJSON(_ value: String) -> String {
