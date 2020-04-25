@@ -8,6 +8,27 @@ struct CSV2JSON: ParsableCommand {
 
     @Option(default: "\n")
     var rowDelimiter: String
+    
+    enum Escaping: String, ExpressibleByArgument {
+        case none
+        case doubleQuote = "\""
+
+        var strategy: CodableCSV.Strategy.Escaping {
+            switch self {
+            case .none:
+                return .none
+            case .doubleQuote:
+                return .doubleQuote
+            }
+        }
+
+        var defaultValueDescription: String {
+            "\(rawValue)"
+        }
+    }
+    
+    @Option(default: .doubleQuote)
+    var escaping: Escaping
 
     enum Header: String, ExpressibleByArgument {
         case none
@@ -94,6 +115,7 @@ struct CSV2JSON: ParsableCommand {
             field: Delimiter.Field(stringLiteral: fieldDelimiter),
             row: Delimiter.Row(stringLiteral: rowDelimiter)
         )
+        config.escapingStrategy = escaping.strategy
         config.headerStrategy = header.strategy
         return config
     }
