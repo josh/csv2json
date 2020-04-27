@@ -1,7 +1,11 @@
 import ArgumentParser
 import CodableCSV
+import Foundation
 
 struct CSV2JSON: ParsableCommand {
+    @Argument()
+    var filename: String?
+
     @Option(default: ",")
     var fieldDelimiter: String
 
@@ -51,7 +55,13 @@ struct CSV2JSON: ParsableCommand {
     var header: Header
 
     func run() throws {
-        let reader = try CSVReader(input: readStdinData(), configuration: csvConfiguration)
+        let reader: CSVReader
+        if let filename = filename {
+            let url = URL(fileURLWithPath: filename)
+            reader = try CSVReader(input: url, configuration: csvConfiguration)
+        } else {
+            reader = try CSVReader(input: readStdinData(), configuration: csvConfiguration)
+        }
 
         switch reader.configuration.headerStrategy {
         case .none:
