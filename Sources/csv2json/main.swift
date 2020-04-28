@@ -60,7 +60,7 @@ struct CSV2JSON: ParsableCommand {
             let url = URL(fileURLWithPath: filename)
             reader = try CSVReader(input: url, configuration: csvConfiguration)
         } else {
-            reader = try CSVReader(input: readStdinData(), configuration: csvConfiguration)
+            reader = try CSVReader(input: .standardInput, configuration: csvConfiguration)
         }
 
         switch reader.configuration.headerStrategy {
@@ -127,14 +127,6 @@ struct CSV2JSON: ParsableCommand {
         config.escapingStrategy = escaping.strategy
         config.headerStrategy = header.strategy
         return config
-    }
-
-    func readStdinData() -> String {
-        var lines = ""
-        while let line = readLine(strippingNewline: false) {
-            lines += line
-        }
-        return lines
     }
 
     func escapeJSON(_ value: String) -> String {
