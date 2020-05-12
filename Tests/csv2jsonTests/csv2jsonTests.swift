@@ -3,6 +3,29 @@ import XCTest
 import class Foundation.Bundle
 
 final class csv2jsonTests: XCTestCase {
+    func testHelp() throws {
+        let output = """
+        USAGE: csv2-json [<filename>] [--field-delimiter <field-delimiter>] [--row-delimiter <row-delimiter>] [--escaping <escaping>] [--header <header>]
+
+        ARGUMENTS:
+          <filename>
+
+        OPTIONS:
+          --field-delimiter <field-delimiter>
+                                  (default: ,)
+          --row-delimiter <row-delimiter>
+                                  (default: 
+        )
+          --escaping <escaping>   (default: ")
+          --header <header>       (default: first-line)
+          -h, --help              Show help information.
+
+
+        """
+
+        XCTAssertEqual(try csv2json("", ["--help"]), output)
+    }
+
     func testDefault() throws {
         let csv = """
         a,b,c
