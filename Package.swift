@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.5"),
-        .package(url: "https://github.com/dehesa/CodableCSV", from: "0.5.5"),
+        .package(url: "https://github.com/dehesa/CodableCSV", from: "0.6.0"),
     ],
     targets: [
         .target(
