@@ -3,14 +3,23 @@ import CodableCSV
 import Foundation
 
 struct CSV2JSON: ParsableCommand {
-    @Argument()
+    @Argument(help: "The CSV input file.")
     var filename: String?
 
-    @Option(default: ",")
-    var fieldDelimiter: String
+    struct Delimiter: RawRepresentable, ExpressibleByArgument {
+        var rawValue: String
 
-    @Option(default: "\n")
-    var rowDelimiter: String
+        var defaultValueDescription: String {
+            let escaped = rawValue.unicodeScalars.map { $0.escaped(asASCII: true) }.joined()
+            return "'\(escaped)'"
+        }
+    }
+
+    @Option(default: Delimiter(rawValue: ","), help: "The character that seperates columns.")
+    var fieldDelimiter: Delimiter
+
+    @Option(default: Delimiter(rawValue: "\n"), help: "The character that seperates rows.")
+    var rowDelimiter: Delimiter
 
     enum Escaping: String, ExpressibleByArgument {
         case none
@@ -26,11 +35,12 @@ struct CSV2JSON: ParsableCommand {
         }
 
         var defaultValueDescription: String {
-            "\(rawValue)"
+            let escaped = rawValue.unicodeScalars.map { $0.escaped(asASCII: true) }.joined()
+            return "'\(escaped)'"
         }
     }
 
-    @Option(default: .doubleQuote)
+    @Option(default: .doubleQuote, help: "Enable field escaping character.")
     var escaping: Escaping
 
     enum Header: String, ExpressibleByArgument {
@@ -51,7 +61,7 @@ struct CSV2JSON: ParsableCommand {
         }
     }
 
-    @Option(default: .firstLine)
+    @Option(default: .firstLine, help: "Use first line as header row.")
     var header: Header
 
     func run() throws {
@@ -121,8 +131,8 @@ struct CSV2JSON: ParsableCommand {
         var config = CSVReader.Configuration()
         config.encoding = .utf8
         config.delimiters = (
-            field: Delimiter.Field(stringLiteral: fieldDelimiter),
-            row: Delimiter.Row(stringLiteral: rowDelimiter)
+            field: CodableCSV.Delimiter.Field(stringLiteral: fieldDelimiter.rawValue),
+            row: CodableCSV.Delimiter.Row(stringLiteral: rowDelimiter.rawValue)
         )
         config.escapingStrategy = escaping.strategy
         config.headerStrategy = header.strategy

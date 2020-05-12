@@ -8,16 +8,15 @@ final class csv2jsonTests: XCTestCase {
         USAGE: csv2-json [<filename>] [--field-delimiter <field-delimiter>] [--row-delimiter <row-delimiter>] [--escaping <escaping>] [--header <header>]
 
         ARGUMENTS:
-          <filename>
+          <filename>              The CSV input file. 
 
         OPTIONS:
           --field-delimiter <field-delimiter>
-                                  (default: ,)
+                                  The character that seperates columns. (default: ',')
           --row-delimiter <row-delimiter>
-                                  (default: 
-        )
-          --escaping <escaping>   (default: ")
-          --header <header>       (default: first-line)
+                                  The character that seperates rows. (default: '\\n')
+          --escaping <escaping>   Enable field escaping character. (default: '\\"')
+          --header <header>       Use first line as header row. (default: first-line)
           -h, --help              Show help information.
 
 
