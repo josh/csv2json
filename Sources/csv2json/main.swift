@@ -15,11 +15,11 @@ struct CSV2JSON: ParsableCommand {
         }
     }
 
-    @Option(default: Delimiter(rawValue: ","), help: "The character that seperates columns.")
-    var fieldDelimiter: Delimiter
+    @Option(help: "The character that seperates columns.")
+    var fieldDelimiter: Delimiter = .init(rawValue: ",")
 
-    @Option(default: Delimiter(rawValue: "\n"), help: "The character that seperates rows.")
-    var rowDelimiter: Delimiter
+    @Option(help: "The character that seperates rows.")
+    var rowDelimiter: Delimiter = .init(rawValue: "\n")
 
     enum Escaping: String, ExpressibleByArgument {
         case none
@@ -40,8 +40,8 @@ struct CSV2JSON: ParsableCommand {
         }
     }
 
-    @Option(default: .doubleQuote, help: "Enable field escaping character.")
-    var escaping: Escaping
+    @Option(help: "Enable field escaping character.")
+    var escaping: Escaping = .doubleQuote
 
     enum Header: String, ExpressibleByArgument {
         case none
@@ -61,8 +61,8 @@ struct CSV2JSON: ParsableCommand {
         }
     }
 
-    @Option(default: .firstLine, help: "Use first line as header row.")
-    var header: Header
+    @Option(help: "Use first line as header row.")
+    var header: Header = .firstLine
 
     func run() throws {
         let reader: CSVReader

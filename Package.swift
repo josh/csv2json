@@ -11,7 +11,7 @@ let package = Package(
         .executable(name: "csv2json", targets: ["csv2json"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.5"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "0.2.0"),
         .package(url: "https://github.com/dehesa/CodableCSV", from: "0.6.0"),
     ],
     targets: [
