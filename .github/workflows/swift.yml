@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: nicklockwood/SwiftFormat
-          ref: 0.44.9
+          ref: 0.44.14
           path: SwiftFormat
 
       - name: Run linter
