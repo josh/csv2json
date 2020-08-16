@@ -7,7 +7,7 @@ $ cat data.tsv | csv2json --field-delimiter $'\t' | jq
 
 ## Installation
 
-Install with Hombrew.
+Install with Homebrew.
 
 ```
 $ brew install josh/tap/csv2json
