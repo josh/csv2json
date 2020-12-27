@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/dehesa/CodableCSV",
         "state": {
           "branch": null,
-          "revision": "4e2c0ca1eff292c0759be0cfa113e64bb931807d",
-          "version": "0.6.1"
+          "revision": "582872ad6e07704c5865137002b5ffeee426796c",
+          "version": "0.6.4"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "eb51f949cdd0c9d88abba9ce79d37eb7ea1231d0",
-          "version": "0.2.0"
+          "revision": "92646c0cdbaca076c8d3d0207891785b3379cbff",
+          "version": "0.3.1"
         }
       }
     ]
